@@ -25,35 +25,43 @@ def section_clear(x,y):
             if grid_to_solve[x][y] in potential_grid[subsectionX*3+m][subsectionY*3+n]:
                 potential_grid[subsectionX*3+m][subsectionY*3+n].remove(grid_to_solve[x][y])
 
+
 # Input sudoku grid
 # 9x9
-
-
 grid_to_solve = [
-[5,3,0,0,0,4,2,0,0],
-[0,0,0,9,0,0,7,0,4],
-[0,0,0,0,1,2,6,0,5],
-[0,0,4,0,6,3,1,0,0],
-[9,0,3,0,4,7,0,6,0],
-[6,0,0,0,0,0,0,0,2],
-[0,0,0,0,0,0,0,0,0],
-[0,2,6,4,0,9,8,0,0],
-[0,9,1,5,0,0,0,0,0]
+[8,2,7,0,1,5,0,4,3],
+[3,0,1,2,4,9,0,7,6],
+[0,0,0,8,0,0,0,2,5],
+[6,0,0,0,0,0,2,0,0],
+[0,1,8,3,9,0,0,0,0],
+[0,0,0,0,6,1,0,3,0],
+[0,6,2,0,0,4,3,0,0],
+[1,0,5,0,0,0,4,8,0],
+[0,0,0,9,0,0,0,1,0]
 ]
 
 potential_grid = [[[1,2,3,4,5,6,7,8,9] for i in range(cols)] for j in range(rows)]
 
 
+for z in range(10):
+    for i in range(9):
+        for j in range(9):
+            if(grid_to_solve[i][j] != 0):
+                row_clear(i, j)
+                col_clear(i, j)
+                section_clear(i,j)
+                potential_grid[i][j] = [grid_to_solve[i][j]]
+
+    sum = 0
+    for x in range(9):
+        for y in range(9):
+            currentLength = len(potential_grid[x][y])
+            if currentLength == 1:
+                grid_to_solve[x][y] = potential_grid[x][y][0]
+            sum += currentLength
+    print(sum)
 
 for i in range(9):
     for j in range(9):
-        if(grid_to_solve[i][j] != 0):
-            row_clear(i, j)
-            col_clear(i, j)
-            section_clear(i,j)
-            potential_grid[i][j] = [grid_to_solve[i][j]]
-
-
-
-
-print(potential_grid)
+        print(potential_grid[i][j], end=' ')
+    print('')
